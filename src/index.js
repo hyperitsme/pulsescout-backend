@@ -5,7 +5,7 @@ import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 import { config } from "./config.js";
 import { initDb } from "./db.js";
-
+import integrations from "./routes/integrations.js";
 // routes
 import health from "./routes/health.js";
 import access from "./routes/access.js";
@@ -20,7 +20,7 @@ app.use(helmet());
 app.use(express.json({ limit: "1mb" }));
 app.use(morgan(config.nodeEnv === "development" ? "dev" : "combined"));
 app.use(rateLimit({ windowMs: 60_000, max: 300 }));
-
+app.use(integrations);
 // --- cors ---
 const corsOpts = {
   origin: (origin, cb) => {
